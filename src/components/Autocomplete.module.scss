@@ -1,0 +1,60 @@
+@import "../styles/globals.scss";
+
+:root {
+  --resultColor: #6a6c70;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+  background: #ffffff;
+  box-shadow: 0px 4px 20px rgba(190, 190, 190, 0.2);
+  border-radius: 4px;
+
+  &__inputContainer {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+
+    &__icon {
+      margin-left: 8px;
+      margin-right: 8px;
+      font-size: 22px;
+      color: #bebebe;
+    }
+
+    input {
+      width: 100%;
+      height: 46px;
+
+      font-size: 18px;
+      font-family: $font_stack;
+      border: none;
+      outline: none;
+
+      &::placeholder {
+        color: #bebebe;
+      }
+    }
+  }
+
+  &__suggestionBox {
+    h4 {
+      margin-left: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: $font_secondary;
+      line-height: 17px;
+      color: #9fa1a2;
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 0;
+      list-style: none;
+    }
+  }
+}

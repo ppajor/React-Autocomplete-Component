@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: 4px;
+
+  li {
+    color: var(--resultColor);
+  }
+
+  &__active {
+    background: #f9f9f9;
+  }
+
+  &__icon {
+    margin-left: auto;
+    color: var(--resultColor);
+  }
+}
