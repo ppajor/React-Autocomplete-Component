@@ -7,6 +7,9 @@
   border-radius: 4px;
 
   li {
+    width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
     color: var(--resultColor);
   }
 
