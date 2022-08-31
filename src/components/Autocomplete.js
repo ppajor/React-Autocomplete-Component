@@ -28,7 +28,11 @@ function Autocomplete() {
 
     let timer = setTimeout(() => {
       if (searchVal.length > 2) fetchData();
-    }, 1500);
+      else {
+        setResults(null);
+        setError(null);
+      }
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [searchVal]);

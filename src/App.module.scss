@@ -1,4 +1,10 @@
 @import "./styles/globals.scss";
 .container {
-  padding: 16px;
+  max-width: $max_width;
+  margin: 0 auto;
+  padding: 24px;
+
+  @include sm {
+    padding: 16px;
+  }
 }
