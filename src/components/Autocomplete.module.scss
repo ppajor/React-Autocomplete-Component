@@ -1,9 +1,5 @@
 @import "../styles/globals.scss";
 
-:root {
-  --resultColor: #6a6c70;
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -55,6 +51,14 @@
       gap: 4px;
       padding: 0;
       list-style: none;
+
+      &__message {
+        margin-left: 8px;
+        font-size: 14px;
+        font-family: $font_secondary;
+        font-style: italic;
+        color: #bebebe;
+      }
     }
   }
 }

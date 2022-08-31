@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Autocomplete.module.scss";
 import { AiOutlineSearch } from "react-icons/ai";
 import MoonLoader from "react-spinners/MoonLoader";
@@ -13,46 +13,43 @@ function Autocomplete() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    //fetching after 1 seconds when user stops typing
+    const fetchData = async () => {
+      console.log("FETCHING...");
+      setLoading(true);
+
+      const data = await getData(searchVal);
+      if (data) setResults(data);
+      else setError("Request failed");
+
+      setLoading(false);
+    };
+
+    let timer = setTimeout(() => {
+      if (searchVal.length > 2) fetchData();
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [searchVal]);
+
   const handleValueChange = async (e) => {
     setSearchVal(e.target.value);
-
-    if (searchVal.length < 3) {
-      if (error) setError(null);
-      setResults(null);
-    } else {
-      await new Promise((resolve, reject) =>
-        setTimeout(() => {
-          const data = getData(e.target.value);
-          if (data) resolve(data);
-          else reject();
-        }, 1000)
-      )
-        .then((data) => setResults(data))
-        .catch(() => setError("Request Error"));
-
-      //   setLoading(true);
-      //   const data =  getData(e.target.value);
-
-      //   if (data) setResults(data);
-      //   else setError("Request Error");
-
-      //   setLoading(false);
-    }
   };
 
   const handleKeyDown = (e) => {
     console.log(e.keyCode);
 
     switch (e.keyCode) {
-      case 38:
+      case 38: //up
         if (elementActive === 0) setElementActive(results.length - 1);
         else setElementActive(elementActive - 1);
         break;
-      case 40:
+      case 40: //down
         if (elementActive === results.length - 1) setElementActive(0);
         else setElementActive(elementActive + 1);
         break;
-      case 13:
+      case 13: //enter
         window.open(results[elementActive].url, "_blank");
         break;
     }
@@ -64,12 +61,31 @@ function Autocomplete() {
         <h4>Results:</h4>
         <ul className={styles.container__suggestionBox__list}>
           {results.length === 0 ? (
-            <p>No Results Found</p>
+            <p className={styles.container__suggestionBox__list__message}>No Results Found</p>
           ) : (
             <>
               {results.map((el, index) => {
-                if (index === elementActive) return <ResultItem key={index} value={el.name} active={true} />;
-                else return <ResultItem key={index} value={el.name} />;
+                if (index === elementActive)
+                  return (
+                    <ResultItem
+                      key={index}
+                      value={el.name}
+                      active={true}
+                      onMouseEnter={() => setElementActive(index)}
+                      url={el.url}
+                      type={el.type}
+                    />
+                  );
+                else
+                  return (
+                    <ResultItem
+                      key={index}
+                      value={el.name}
+                      onMouseEnter={() => setElementActive(index)}
+                      url={el.url}
+                      type={el.type}
+                    />
+                  );
               })}
             </>
           )}

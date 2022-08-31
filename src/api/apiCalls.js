@@ -1,4 +1,5 @@
 import axios from "axios";
+import { types } from "../utils/utils";
 
 export async function getData(value) {
   const results = [];
@@ -19,7 +20,7 @@ export async function getData(value) {
     return {
       name: el.name,
       url: el.html_url,
-      type: "repository",
+      type: types.repository,
     };
   });
 
@@ -40,7 +41,7 @@ export async function getData(value) {
     return {
       name: el.login,
       url: el.html_url,
-      type: "user",
+      type: types.user,
     };
   });
 
