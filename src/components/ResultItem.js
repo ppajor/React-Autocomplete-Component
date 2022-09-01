@@ -15,7 +15,7 @@ function ResultItem({ active, value, onMouseEnter, url, type }) {
   };
 
   return (
-    <a href={url} target="_blank" onMouseEnter={onMouseEnter}>
+    <a href={url} target="_blank" rel="noreferrer" onMouseEnter={onMouseEnter}>
       <div className={`${styles.container} ${active && styles.container__active}`}>
         {typeOfIcon()}
         <li>{value}</li>

@@ -7,16 +7,15 @@ import ResultItem from "./ResultItem";
 import ErrorMessage from "./ErrorMessage";
 
 function Autocomplete() {
-  const [searchVal, setSearchVal] = useState("");
-  const [elementActive, setElementActive] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
   const [results, setResults] = useState(null);
+  const [elementActive, setElementActive] = useState(0);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     //fetching after 1 seconds when user stops typing
     const fetchData = async () => {
-      console.log("FETCHING...");
       setLoading(true);
 
       const data = await getData(searchVal);
@@ -42,7 +41,7 @@ function Autocomplete() {
   };
 
   const handleKeyDown = (e) => {
-    console.log(e.keyCode);
+    // console.log(e.keyCode);
 
     switch (e.keyCode) {
       case 38: //up
@@ -69,27 +68,16 @@ function Autocomplete() {
           ) : (
             <>
               {results.map((el, index) => {
-                if (index === elementActive)
-                  return (
-                    <ResultItem
-                      key={index}
-                      value={el.name}
-                      active={true}
-                      onMouseEnter={() => setElementActive(index)}
-                      url={el.url}
-                      type={el.type}
-                    />
-                  );
-                else
-                  return (
-                    <ResultItem
-                      key={index}
-                      value={el.name}
-                      onMouseEnter={() => setElementActive(index)}
-                      url={el.url}
-                      type={el.type}
-                    />
-                  );
+                return (
+                  <ResultItem
+                    key={index}
+                    value={el.name}
+                    active={index === elementActive ? true : false}
+                    onMouseEnter={() => setElementActive(index)}
+                    url={el.url}
+                    type={el.type}
+                  />
+                );
               })}
             </>
           )}
@@ -103,6 +91,7 @@ function Autocomplete() {
       <div className={styles.container__inputContainer}>
         <AiOutlineSearch className={styles.container__inputContainer__icon} />
         <input
+          data-testid="input-search"
           type="text"
           onChange={handleValueChange}
           value={searchVal}
