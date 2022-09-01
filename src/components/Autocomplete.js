@@ -64,7 +64,9 @@ function Autocomplete() {
         <h4>Results:</h4>
         <ul className={styles.container__suggestionBox__list}>
           {results.length === 0 ? (
-            <p className={styles.container__suggestionBox__list__message}>No Results Found</p>
+            <p className={styles.container__suggestionBox__list__message} data-testid="noresults-message">
+              No Results Found
+            </p>
           ) : (
             <>
               {results.map((el, index) => {
