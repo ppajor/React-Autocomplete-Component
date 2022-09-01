@@ -19,8 +19,10 @@ function Autocomplete() {
       setLoading(true);
 
       const data = await getData(searchVal);
-      if (data) setResults(data);
-      else setError("Request failed");
+      if (data) {
+        setError(null);
+        setResults(data);
+      } else setError("Request failed");
 
       setLoading(false);
     };

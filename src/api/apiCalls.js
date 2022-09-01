@@ -10,15 +10,18 @@ export async function getData(value) {
     `https://api.github.com/search/users?q=${value}&per_page=${resultsPerPage}`,
   ];
 
-  await Promise.all(
+  var error = false;
+
+  await Promise.allSettled(
     paths.map(async (path, index) => {
       const response = await axios.get(path).catch((error) => {
         if (error.response) {
           console.log("error", error.response);
-          return false;
         }
       });
-      if (!response) return false;
+      if (!response) {
+        error = true;
+      }
 
       const items = response.data.items;
       let data;
@@ -44,6 +47,6 @@ export async function getData(value) {
   );
 
   const sortedData = sortAlphabetically(results).splice(0, 50);
-
-  return sortedData;
+  if (!error) return sortedData;
+  else return false;
 }
