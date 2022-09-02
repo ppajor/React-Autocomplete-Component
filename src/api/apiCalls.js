@@ -12,16 +12,9 @@ export async function getData(value) {
 
   var error = false;
 
-  await Promise.allSettled(
+  let promises = await Promise.allSettled(
     paths.map(async (path, index) => {
-      const response = await axios.get(path).catch((error) => {
-        if (error.response) {
-          console.log("error", error.response);
-        }
-      });
-      if (!response) {
-        error = true;
-      }
+      const response = await axios.get(path);
 
       const items = response.data.items;
       let data;
@@ -45,6 +38,10 @@ export async function getData(value) {
       results.push(...data);
     })
   );
+
+  promises.map((promise) => {
+    if (promise.status === "rejected") error = true;
+  });
 
   const sortedData = sortAlphabetically(results).splice(0, 50);
   if (!error) return sortedData;

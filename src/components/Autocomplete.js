@@ -14,7 +14,7 @@ function Autocomplete() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    //fetching after 1 seconds when user stops typing
+    //fetching after .5 seconds when user stops typing
     const fetchData = async () => {
       setLoading(true);
 
